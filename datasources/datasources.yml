@@ -1,0 +1,27 @@
+apiVersion: 1
+
+datasources:
+  - name: InfluxDB
+    type: influxdb
+    uid: DiolWNbVz
+    url: $GF_DATASOURCE_INFLUX_URL
+    jsonData:
+      version: Flux
+      organization: $GF_DATASOURCE_INFLUX_ORGANIZATION
+      defaultBucket: $GF_DATASOURCE_INFLUX_BUCKET
+    secureJsonData:
+      token: $GF_DATASOURCE_INFLUX_TOKEN
+    editable: false
+    version: 1
+
+  - name: MongoDB
+    type: meln5674-mongodb-community
+    uid: VeroelZVk
+    database: $GF_DATASOURCE_MONGO_DATABASE
+    user: $GF_DATASOURCE_MONGO_USERNAME
+    jsonData:
+      url: $GF_DATASOURCE_MONGO_URL
+    secureJsonData:
+      password: $GF_DATASOURCE_MONGO_PASSWORD
+    editable: false
+    version: 1

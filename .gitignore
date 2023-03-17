@@ -1,0 +1,53 @@
+# IDE & System
+$RECYCLE.BIN/
+.AppleDouble
+.DS_Store
+.LSOverride
+.Trash-*
+.buildpath
+.c9
+.c9revisions
+.directory
+.fuse_hidden*
+.idea
+.nfs*
+.project
+.settings
+.vs
+.vscode
+*.iml
+[Dd]esktop.ini
+[Tt]humbs.db
+
+# Logs
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Runtime
+pids/
+*.pid
+*.pid.lock
+*.seed
+
+# Cache & Temporary
+cache/
+tmp/
+.eslintcache
+.grunt
+.lock-wscript
+.mypy_cache
+.node_repl_history
+.npm
+.nyc_output
+.yarn-integrity
+*.tmp
+
+# Configuration
+.env*
+!.env*.sample
+
+# Do not ignore .gitkeep files
+!.gitkeep
