@@ -1,0 +1,381 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 5,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "meln5674-mongodb-community",
+        "uid": "VeroelZVk"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show measurements",
+              "url": "/d/glDxDOx4z/measurements?var-station=${__data.fields.station_id}&var-quantity=All"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "station_id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "station_name"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Name"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "updated"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Last Active"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "quantities"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Quantities"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 27,
+        "w": 10,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "aggregation": "[\r\n  {\r\n    \"$project\": {\r\n      \"station_id\": \"$station_id\",\r\n      \"station_name\": \"$station_name\",\r\n      \"updated\": \"$updated\",\r\n      \"quantities\": {\r\n        \"$reduce\": {\r\n          \"input\": \"$sensors.quantity\",\r\n          \"initialValue\": \"\",\r\n          \"in\": {\r\n            \"$concat\": [\r\n              \"$$value\",\r\n              {\"$cond\": [{\"$eq\": [\"$$value\", \"\"]}, \"\", \", \"]}, \r\n              \"$$this\"\r\n            ]\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }\r\n]\r\n",
+          "autoTimeBound": false,
+          "autoTimeSort": false,
+          "collection": "stations",
+          "database": "airnominal",
+          "datasource": {
+            "type": "meln5674-mongodb-community",
+            "uid": "VeroelZVk"
+          },
+          "labelFields": [
+            "sensorID"
+          ],
+          "legendFormat": "",
+          "queryType": "Table",
+          "refId": "A",
+          "schemaInference": false,
+          "schemaInferenceDepth": 20,
+          "timestampField": "timestamp",
+          "timestampFormat": "",
+          "valueFieldTypes": [
+            "string",
+            "string",
+            "*string",
+            "string"
+          ],
+          "valueFields": [
+            "station_id",
+            "station_name",
+            "updated",
+            "quantities"
+          ]
+        }
+      ],
+      "title": "Stations",
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "time",
+                "targetField": "updated"
+              }
+            ],
+            "fields": {}
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "meln5674-mongodb-community",
+        "uid": "VeroelZVk"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 27,
+        "w": 13,
+        "x": 10,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "basemap": {
+          "config": {},
+          "name": "Layer 0",
+          "type": "default"
+        },
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": true,
+          "showDebug": false,
+          "showMeasure": false,
+          "showScale": false,
+          "showZoom": true
+        },
+        "layers": [
+          {
+            "config": {
+              "showLegend": false,
+              "style": {
+                "color": {
+                  "fixed": "dark-green"
+                },
+                "opacity": 0.4,
+                "rotation": {
+                  "fixed": 0,
+                  "max": 360,
+                  "min": -360,
+                  "mode": "mod"
+                },
+                "size": {
+                  "fixed": 5,
+                  "max": 15,
+                  "min": 2
+                },
+                "symbol": {
+                  "fixed": "img/icons/marker/circle.svg",
+                  "mode": "fixed"
+                },
+                "text": {
+                  "field": "station_name",
+                  "fixed": "",
+                  "mode": "field"
+                },
+                "textConfig": {
+                  "fontSize": 12,
+                  "offsetX": 0,
+                  "offsetY": -20,
+                  "textAlign": "center",
+                  "textBaseline": "middle"
+                }
+              }
+            },
+            "location": {
+              "latitude": "lat",
+              "longitude": "lon",
+              "mode": "coords"
+            },
+            "name": "Station",
+            "tooltip": true,
+            "type": "markers"
+          }
+        ],
+        "tooltip": {
+          "mode": "details"
+        },
+        "view": {
+          "allLayers": true,
+          "id": "fit",
+          "lat": 0,
+          "lon": 0,
+          "zoom": 15
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "aggregation": "[]",
+          "autoTimeBound": false,
+          "autoTimeSort": false,
+          "collection": "stations",
+          "database": "airnominal",
+          "datasource": {
+            "type": "meln5674-mongodb-community",
+            "uid": "VeroelZVk"
+          },
+          "labelFields": [
+            "sensorID"
+          ],
+          "legendFormat": "",
+          "queryType": "Table",
+          "refId": "A",
+          "schemaInference": false,
+          "schemaInferenceDepth": 20,
+          "timestampField": "timestamp",
+          "timestampFormat": "",
+          "valueFieldTypes": [
+            "string",
+            "string",
+            "*string",
+            "*float64",
+            "*float64"
+          ],
+          "valueFields": [
+            "station_id",
+            "station_name",
+            "updated",
+            "lat",
+            "lon"
+          ]
+        }
+      ],
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "time",
+                "targetField": "updated"
+              }
+            ],
+            "fields": {}
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "station_id": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "lat": "Last Latitude",
+              "lon": "Last Longitude",
+              "station_name": "Name",
+              "updated": "Last Active"
+            }
+          }
+        }
+      ],
+      "type": "geomap"
+    }
+  ],
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {},
+  "timepicker": {
+    "hidden": true
+  },
+  "timezone": "",
+  "title": "Stations",
+  "uid": "EK8TJ5xVk",
+  "version": 7
+}
