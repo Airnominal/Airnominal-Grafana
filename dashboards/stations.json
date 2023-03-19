@@ -21,10 +21,9 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 5,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -157,7 +156,7 @@
           "valueFieldTypes": [
             "string",
             "string",
-            "*string",
+            "*time.Time",
             "string"
           ],
           "valueFields": [
@@ -320,7 +319,7 @@
           "valueFieldTypes": [
             "string",
             "string",
-            "*string",
+            "*time.Time",
             "*float64",
             "*float64"
           ],
@@ -377,5 +376,5 @@
   "timezone": "",
   "title": "Stations",
   "uid": "EK8TJ5xVk",
-  "version": 7
+  "version": 8
 }

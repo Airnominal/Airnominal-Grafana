@@ -21,7 +21,7 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "links": [],
@@ -83,12 +83,13 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 16,
+        "h": 14,
         "w": 12,
         "x": 0,
         "y": 0
       },
       "id": 2,
+      "maxPerRow": 2,
       "options": {
         "legend": {
           "calcs": [],
@@ -149,7 +150,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 16,
+        "h": 14,
         "w": 12,
         "x": 12,
         "y": 0
@@ -270,16 +271,11 @@
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "Test",
-          "value": "d6d4b596-4608-46f0-9b0f-675b9e981aa1"
-        },
         "datasource": {
           "type": "meln5674-mongodb-community",
           "uid": "VeroelZVk"
         },
-        "definition": "",
+        "definition": "[\r\n  {\r\n    \"$project\": {\r\n      \"identifier\": {\r\n        \"$concat\": [\r\n          \"$station_name\",\r\n          \" : \",\r\n          \"$station_id\"\r\n        ]\r\n      }\r\n    }\r\n  }\r\n]\r\n",
         "description": "",
         "hide": 0,
         "includeAll": false,
@@ -314,7 +310,7 @@
           "type": "influxdb",
           "uid": "DiolWNbVz"
         },
-        "definition": "",
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(\r\n  bucket: v.defaultBucket,\r\n  tag: \"display_quantity\",\r\n  predicate: (r) =>\r\n    contains(value: r.station_id, set: ${station:json}) and\r\n    r._measurement == \"data\" and\r\n    r._field == \"value\"\r\n)\r\n",
         "hide": 0,
         "includeAll": true,
         "label": "Quantity",
@@ -330,9 +326,13 @@
       }
     ]
   },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
   "timepicker": {},
   "timezone": "",
   "title": "Measurements",
   "uid": "glDxDOx4z",
-  "version": 1
+  "version": 2
 }
