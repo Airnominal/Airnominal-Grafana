@@ -290,7 +290,7 @@
           "fieldName": "identifier",
           "fieldType": "string"
         },
-        "refresh": 2,
+        "refresh": 1,
         "regex": "(?<text>.*) : (?<value>.*)",
         "skipUrlSync": false,
         "sort": 0,
@@ -307,18 +307,24 @@
           ]
         },
         "datasource": {
-          "type": "influxdb",
-          "uid": "DiolWNbVz"
+          "type": "meln5674-mongodb-community",
+          "uid": "VeroelZVk"
         },
-        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(\r\n  bucket: v.defaultBucket,\r\n  tag: \"display_quantity\",\r\n  predicate: (r) =>\r\n    r._measurement == \"data\" and\r\n    r._field == \"value\" and\r\n    contains(value: r.station_id, set: ${station:json})\r\n)\r\n",
+        "definition": "[\r\n  {\r\n    \"$match\": {\r\n      \"station_id\": {\r\n        \"$in\": ${station:json}\r\n      }\r\n    }\r\n  },\r\n  {\r\n    \"$unwind\": \"$sensors\"\r\n  },\r\n  {\r\n    \"$group\": {\r\n      \"_id\": {\r\n        \"quantity\": \"$sensors.quantity\",\r\n        \"unit\": \"$sensors.unit\"\r\n      }\r\n    }\r\n  },\r\n  {\r\n    \"$project\": {\r\n      \"identifier\": {\r\n        \"$concat\": [\r\n          \"$_id.quantity\",\r\n          \" (\",\r\n          \"$_id.unit\",\r\n          \")\"\r\n        ]\r\n      }\r\n    }\r\n  }\r\n]\r\n",
         "hide": 0,
         "includeAll": true,
         "label": "Quantity",
         "multi": true,
         "name": "quantity",
         "options": [],
-        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(\r\n  bucket: v.defaultBucket,\r\n  tag: \"display_quantity\",\r\n  predicate: (r) =>\r\n    r._measurement == \"data\" and\r\n    r._field == \"value\" and\r\n    contains(value: r.station_id, set: ${station:json})\r\n)\r\n",
-        "refresh": 2,
+        "query": {
+          "aggregation": "[\r\n  {\r\n    \"$match\": {\r\n      \"station_id\": {\r\n        \"$in\": ${station:json}\r\n      }\r\n    }\r\n  },\r\n  {\r\n    \"$unwind\": \"$sensors\"\r\n  },\r\n  {\r\n    \"$group\": {\r\n      \"_id\": {\r\n        \"quantity\": \"$sensors.quantity\",\r\n        \"unit\": \"$sensors.unit\"\r\n      }\r\n    }\r\n  },\r\n  {\r\n    \"$project\": {\r\n      \"identifier\": {\r\n        \"$concat\": [\r\n          \"$_id.quantity\",\r\n          \" (\",\r\n          \"$_id.unit\",\r\n          \")\"\r\n        ]\r\n      }\r\n    }\r\n  }\r\n]\r\n",
+          "collection": "stations",
+          "database": "airnominal",
+          "fieldName": "identifier",
+          "fieldType": "string"
+        },
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -334,5 +340,5 @@
   "timezone": "",
   "title": "Measurements",
   "uid": "glDxDOx4z",
-  "version": 2
+  "version": 3
 }
